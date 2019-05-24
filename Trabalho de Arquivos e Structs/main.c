@@ -28,18 +28,21 @@ struct cidadeHumanos{
 	char nome_Cidade[100];
 	struct Humanos *humano;
 	int num_humanos;
+	float str;
 };
 
 struct cidadeAnjos{
 	char nome_Cidade[100];
 	struct Anjos *anjo;
 	int num_anjos;
+	float str;
 };
 
 struct cidadeDemonios{
 	char nome_Cidade[100];
 	struct Demonios *demonio;
 	int num_demonios;
+	float str;
 };
 
 
@@ -117,6 +120,33 @@ void f_humanos(struct cidadeHumanos ** cidades, int * num_cidades){
 	fclose(fp);
 }
 
+void totalizarStrHumanos(struct cidadeHumanos ** cidades, int num_cidades){
+	int i, j;
+	struct cidadeHumanos *cidades_aux = *cidades;
+	for(i=0; i<num_cidades; i++)
+		for(j=0; j<cidades_aux->num_humanos; j++)
+			cidades_aux[i].str += cidades_aux[i].humano[j].str;
+	*cidades = cidades_aux;	
+}		
+
+void totalizarStrAnjos(struct cidadeAnjos ** cidades, int num_cidades){
+	int i, j;
+	struct cidadeAnjos *cidades_aux = *cidades;
+	for(i=0; i<num_cidades; i++)
+		for(j=0; j<cidades_aux->num_anjos; j++)
+			cidades_aux[i].str += cidades_aux[i].anjo[j].str;
+	*cidades = cidades_aux;	
+}
+
+void totalizarStrDemonios(struct cidadeDemonios ** cidades, int num_cidades){
+	int i, j;
+	struct cidadeDemonios *cidades_aux = *cidades;
+	for(i=0; i<num_cidades; i++)
+		for(j=0; j<cidades_aux->num_demonios; j++)
+			cidades_aux[i].str += cidades_aux[i].demonio[j].str;
+	*cidades = cidades_aux;	
+}
+
 int main(int argc, char ** argv){
 	setlocale(LC_ALL, "Portuguese");
 	int num_cidadesHumanos, num_cidadesAnjos, num_cidadesDemonios;
@@ -128,18 +158,26 @@ int main(int argc, char ** argv){
 	struct cidadeDemonios * cidades_Demonios;
 	f_demonios(&cidades_Demonios, &num_cidadesDemonios);
 	
+	totalizarStrHumanos(&cidades_Humanos, num_cidadesHumanos);
+	
+	totalizarStrAnjos(&cidades_Anjos, num_cidadesAnjos);
+	
+	totalizarStrDemonios(&cidades_Demonios, num_cidadesDemonios);
 	
 	printf("\n%s", cidades_Humanos[0].nome_Cidade);
-	printf("\n %s ", cidades_Humanos[0].humano[2].nome);
-	printf("%.2f\n", cidades_Humanos[0].humano[2].str);
+	printf("\n%.2f\n", cidades_Humanos[0].str);
+//	printf("\n %s ", cidades_Humanos[0].humano[2].nome);
+//	printf("%.2f\n", cidades_Humanos[0].humano[2].str);
 	
 	printf("\n%s", cidades_Anjos[0].nome_Cidade);
-	printf("\n %s ", cidades_Anjos[0].anjo[0].nome);
-	printf("%.2f\n", cidades_Anjos[0].anjo[0].str);
+    printf("\n%.2f\n", cidades_Anjos[0].str);
+//	printf("\n %s ", cidades_Anjos[0].anjo[0].nome);
+//	printf("%.2f\n", cidades_Anjos[0].anjo[0].str);
 	
 	printf("\n%s", cidades_Demonios[0].nome_Cidade);
-	printf("\n %s ", cidades_Demonios[0].demonio[0].nome);
+	printf("\n%.2f\n", cidades_Demonios[0].str);
+/*	printf("\n %s ", cidades_Demonios[0].demonio[0].nome);
 	printf("%.2f\n", cidades_Demonios[0].demonio[0].str);
-	
+	*/
 	return(0);
 }
