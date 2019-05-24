@@ -1,0 +1,11 @@
+2
+
+Celania 2
+
+        Ramiel        50,2   23,5   1,90
+        
+        Natanael      23,7   23,4   1,30
+
+Petras 1
+
+       Bonadin        40,0   24,7   1,50
