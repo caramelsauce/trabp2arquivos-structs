@@ -56,9 +56,9 @@ void f_demonios(struct cidadeDemonios ** cidades, int * num_cidades){
 	cidades_aux=(struct cidadeDemonios *) calloc(*num_cidades, sizeof(struct cidadeDemonios));
 	
 	for(i=0; i<*num_cidades; i++){
-		fscanf(fp, "%s %d", cidades_aux[i].nome_Cidade, &cidades_aux->num_demonios);
-		cidades_aux[i].demonio = (struct Demonios *) calloc(cidades_aux->num_demonios, sizeof(struct Demonios));
-		for(j=0;j<cidades_aux->num_demonios; j++){
+		fscanf(fp, "%s %d", cidades_aux[i].nome_Cidade, &cidades_aux[i].num_demonios);
+		cidades_aux[i].demonio = (struct Demonios *) calloc(cidades_aux[i].num_demonios, sizeof(struct Demonios));
+		for(j=0;j<cidades_aux[i].num_demonios; j++){
 			fscanf(fp, "%s %f %f", cidades_aux[i].demonio[j].nome,
 									&cidades_aux[i].demonio[j].darkness,
 									&cidades_aux[i].demonio[j].visao);
@@ -82,9 +82,9 @@ void f_anjos(struct cidadeAnjos ** cidades, int * num_cidades){
 	cidades_aux=(struct cidadeAnjos *) calloc(*num_cidades, sizeof(struct cidadeAnjos));
 	
 	for(i=0; i<*num_cidades; i++){
-		fscanf(fp, "%s %d", cidades_aux[i].nome_Cidade, &cidades_aux->num_anjos);
-		cidades_aux[i].anjo = (struct Anjos *) calloc(cidades_aux->num_anjos, sizeof(struct Anjos));
-		for(j=0;j<cidades_aux->num_anjos; j++){
+		fscanf(fp, "%s %d", cidades_aux[i].nome_Cidade, &cidades_aux[i].num_anjos);
+		cidades_aux[i].anjo = (struct Anjos *) calloc(cidades_aux[i].num_anjos, sizeof(struct Anjos));
+		for(j=0;j<cidades_aux[i].num_anjos; j++){
 			fscanf(fp, "%s %f %f %f", cidades_aux[i].anjo[j].nome,
 								&cidades_aux[i].anjo[j].capacidade_de_voo,
 								&cidades_aux[i].anjo[j].peso,
@@ -109,9 +109,9 @@ void f_humanos(struct cidadeHumanos ** cidades, int * num_cidades){
 	cidades_aux = (struct cidadeHumanos *) calloc(*num_cidades, sizeof(struct cidadeHumanos));
 	
     for(i=0; i<*num_cidades; i++){
-    	fscanf(fp, "%s %d", cidades_aux[i].nome_Cidade, &cidades_aux->num_humanos);
-    	cidades_aux[i].humano = (struct Humanos *) calloc(cidades_aux->num_humanos, sizeof(struct Humanos));
-		for(j=0; j<cidades_aux->num_humanos; j++){
+    	fscanf(fp, "%s %d", cidades_aux[i].nome_Cidade, &cidades_aux[i].num_humanos);
+    	cidades_aux[i].humano = (struct Humanos *) calloc(cidades_aux[i].num_humanos, sizeof(struct Humanos));
+		for(j=0; j<cidades_aux[i].num_humanos; j++){
 			fscanf(fp, "%s %f", cidades_aux[i].humano[j].nome, 
 			                    &cidades_aux[i].humano[j].str);
 		}
@@ -124,7 +124,7 @@ void totalizarStrHumanos(struct cidadeHumanos ** cidades, int num_cidades){
 	int i, j;
 	struct cidadeHumanos *cidades_aux = *cidades;
 	for(i=0; i<num_cidades; i++)
-		for(j=0; j<cidades_aux->num_humanos; j++)
+		for(j=0; j<cidades_aux[i].num_humanos; j++)
 			cidades_aux[i].str += cidades_aux[i].humano[j].str;
 	*cidades = cidades_aux;	
 }		
@@ -133,7 +133,7 @@ void totalizarStrAnjos(struct cidadeAnjos ** cidades, int num_cidades){
 	int i, j;
 	struct cidadeAnjos *cidades_aux = *cidades;
 	for(i=0; i<num_cidades; i++)
-		for(j=0; j<cidades_aux->num_anjos; j++)
+		for(j=0; j<cidades_aux[i].num_anjos; j++)
 			cidades_aux[i].str += cidades_aux[i].anjo[j].str;
 	*cidades = cidades_aux;	
 }
@@ -142,7 +142,7 @@ void totalizarStrDemonios(struct cidadeDemonios ** cidades, int num_cidades){
 	int i, j;
 	struct cidadeDemonios *cidades_aux = *cidades;
 	for(i=0; i<num_cidades; i++)
-		for(j=0; j<cidades_aux->num_demonios; j++)
+		for(j=0; j<cidades_aux[i].num_demonios; j++)
 			cidades_aux[i].str += cidades_aux[i].demonio[j].str;
 	*cidades = cidades_aux;	
 }
