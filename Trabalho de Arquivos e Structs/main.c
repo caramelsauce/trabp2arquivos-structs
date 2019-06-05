@@ -220,9 +220,9 @@ float somaAADemonios(struct cidadeDemonios *cidades, int num_cidades)
 void printStrCidadesAnjos(struct cidadeAnjos *cidades, int num_cidades)
 {
 	int i;
-	printf("Anjos:\n");
+	printf("Anjos:\n\n");
 	for(i=0;i<num_cidades;i++){
-		printf("   %s tem forÃ§a %.2f\n\n",cidades[i].nome_Cidade, cidades[i].str);
+		printf("   %s tem força %.2f\n\n",cidades[i].nome_Cidade, cidades[i].str);
 	}
 	printf("\n\n");
 }
@@ -232,7 +232,7 @@ void printStrCidadesHumanos(struct cidadeHumanos *cidades, int num_cidades)
     int i;
 	printf("Humanos:\n\n");
 	for(i=0;i<num_cidades;i++){
-		printf("   %s tem forÃ§a %.2f\n\n",cidades[i].nome_Cidade, cidades[i].str);
+		printf("   %s tem força %.2f\n\n",cidades[i].nome_Cidade, cidades[i].str);
 	}
 	printf("\n\n");
 }
@@ -242,7 +242,7 @@ void printStrCidadesDemonios(struct cidadeDemonios *cidades, int num_cidades)
 	int i;
 	printf("Demonios:\n\n");
 	for(i=0;i<num_cidades;i++){
-		printf("   %s tem forÃ§a %.2f\n\n",cidades[i].nome_Cidade, cidades[i].str);
+		printf("   %s tem força %.2f\n\n",cidades[i].nome_Cidade, cidades[i].str);
 	}
 	printf("\n\n");
 }
@@ -278,7 +278,7 @@ int main(int argc, char ** argv)
     printStrCidadesAnjos(cidades_Anjos, num_cidadesAnjos);
 	printStrCidadesHumanos(cidades_Humanos, num_cidadesHumanos);
 	printStrCidadesDemonios(cidades_Demonios, num_cidadesDemonios);
-    printf("A soma das forÃ§as dos indivÃ­duos com letras 'a' no nome Ã© %.2f\n\n", soma2a);
+    printf("A soma das forças dos indivíduos com letras 'a' no nome é: %.2f\n\n", soma2a);
 
 	return(0);
 }
