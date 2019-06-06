@@ -3,10 +3,9 @@
 #include <locale.h>
 #include <string.h>
 #include <math.h>
-
 struct Humanos{
 	char nome[100];
-	float str;//strength = forï¿½a
+	float str;//strength = força
 };
 
 struct Anjos{
@@ -43,6 +42,11 @@ struct cidadeDemonios{
 	char nome_Cidade[100];
 	struct Demonios *demonio;
 	int num_demonios;
+	float str;
+};
+
+struct foo{
+	char nome[100];
 	float str;
 };
 
@@ -247,6 +251,48 @@ void printStrCidadesDemonios(struct cidadeDemonios *cidades, int num_cidades)
 	printf("\n\n");
 }
 
+void filipe(struct cidadeHumanos * cidades_Humanos, struct cidadeAnjos * cidades_Anjos, struct cidadeDemonios * cidades_Demonios, int num_cidadesHumanos, int num_cidadesAnjos, int num_cidadesDemonios)
+{
+	int i, j, p=0;
+	struct foo * geral;
+	
+	for(i=0;i<num_cidadesHumanos;i++){
+		p+=cidades_Humanos[i].num_humanos;
+	}
+	for(i=0;i<num_cidadesAnjos;i++){
+		p+=cidades_Anjos[i].num_anjos;
+	}
+	for(i=0;i<num_cidadesDemonios;i++){
+		p+=cidades_Demonios[i].num_demonios;
+	}
+	
+	geral = (struct foo *) calloc(p, sizeof(struct foo));
+	
+	for(i=0;i<num_cidadesHumanos;i++){
+		for(j=0;i<cidades_Humanos[i].num_humanos;j++){
+			strcpy(geral[i].nome,cidades_Humanos[i].humano[j].nome);
+			geral[i].str=cidades_Humanos[i].humano[j].str;
+		}
+	}
+	
+	for(i=0;i<num_cidadesAnjos;i++){
+		for(j=0;i<cidades_Anjos[i].num_anjos;j++){
+			strcpy(geral[i].nome,cidades_Anjos[i].anjo[j].nome);
+			geral[i].str=cidades_Anjos[i].anjo[j].str;
+		}
+	}
+	
+	for(i=0;i<num_cidadesDemonios;i++){
+		for(j=0;i<cidades_Demonios[i].num_demonios;j++){
+			strcpy(geral[i].nome,cidades_Demonios[i].demonio[j].nome);
+			geral[i].str=cidades_Demonios[i].demonio[j].str;
+		}
+	}
+	
+	
+	
+}
+
 int main(int argc, char ** argv)
 {
 	setlocale(LC_ALL, "Portuguese");
@@ -262,13 +308,14 @@ int main(int argc, char ** argv)
 	struct cidadeDemonios * cidades_Demonios;
 	f_demonios(&cidades_Demonios, &num_cidadesDemonios);
 	
-//totalizar forÃ§a das cidades
+	
+//totalizar força das cidades
 
 	totalizarStrHumanos(&cidades_Humanos, num_cidadesHumanos);
 	totalizarStrAnjos(&cidades_Anjos, num_cidadesAnjos);
 	totalizarStrDemonios(&cidades_Demonios, num_cidadesDemonios);
 
-//soma das forÃ§as do indivÃ­duos com 2 letra 'a' no nome
+//soma das forças do indivíduos com 2 letra 'a' no nome
 
 	soma2a = somaAAHumanos(cidades_Humanos, num_cidadesHumanos) + somaAAAnjos(cidades_Anjos, num_cidadesAnjos) + somaAADemonios(cidades_Demonios, num_cidadesDemonios);
 
