@@ -3,7 +3,6 @@
 #include <locale.h>
 #include <string.h>
 #include <math.h>
-
 struct Humanos{
 	char nome[100];
 	float str;//strength = forï¿½a
@@ -43,6 +42,11 @@ struct cidadeDemonios{
 	char nome_Cidade[100];
 	struct Demonios *demonio;
 	int num_demonios;
+	float str;
+};
+
+struct foo{
+	char nome[100];
 	float str;
 };
 
@@ -124,7 +128,7 @@ void f_humanos(struct cidadeHumanos ** cidades, int * num_cidades)
 	fclose(fp);
 }
 
-void totalizarStrHumanos(struct cidadeHumanos ** cidades, int num_cidades)
+void totalizarCidadesStrHumanos(struct cidadeHumanos ** cidades, int num_cidades)
 {
 	int i, j;
 	struct cidadeHumanos *cidades_aux = *cidades;
@@ -134,7 +138,7 @@ void totalizarStrHumanos(struct cidadeHumanos ** cidades, int num_cidades)
 	*cidades = cidades_aux;	
 }		
 
-void totalizarStrAnjos(struct cidadeAnjos ** cidades, int num_cidades)
+void totalizarCidadesStrAnjos(struct cidadeAnjos ** cidades, int num_cidades)
 {
 	int i, j;
 	struct cidadeAnjos *cidades_aux = *cidades;
@@ -144,7 +148,7 @@ void totalizarStrAnjos(struct cidadeAnjos ** cidades, int num_cidades)
 	*cidades = cidades_aux;	
 }
 
-void totalizarStrDemonios(struct cidadeDemonios ** cidades, int num_cidades)
+void totalizarCidadesStrDemonios(struct cidadeDemonios ** cidades, int num_cidades)
 {
 	int i, j;
 	struct cidadeDemonios *cidades_aux = *cidades;
@@ -222,7 +226,7 @@ void printStrCidadesAnjos(struct cidadeAnjos *cidades, int num_cidades)
 	int i;
 	printf("Anjos:\n\n");
 	for(i=0;i<num_cidades;i++){
-		printf("   %s tem força %.2f\n\n",cidades[i].nome_Cidade, cidades[i].str);
+		printf("   %s tem forï¿½a %.2f\n\n",cidades[i].nome_Cidade, cidades[i].str);
 	}
 	printf("\n\n");
 }
@@ -232,7 +236,7 @@ void printStrCidadesHumanos(struct cidadeHumanos *cidades, int num_cidades)
     int i;
 	printf("Humanos:\n\n");
 	for(i=0;i<num_cidades;i++){
-		printf("   %s tem força %.2f\n\n",cidades[i].nome_Cidade, cidades[i].str);
+		printf("   %s tem forï¿½a %.2f\n\n",cidades[i].nome_Cidade, cidades[i].str);
 	}
 	printf("\n\n");
 }
@@ -242,16 +246,145 @@ void printStrCidadesDemonios(struct cidadeDemonios *cidades, int num_cidades)
 	int i;
 	printf("Demonios:\n\n");
 	for(i=0;i<num_cidades;i++){
-		printf("   %s tem força %.2f\n\n",cidades[i].nome_Cidade, cidades[i].str);
+		printf("   %s tem forï¿½a %.2f\n\n",cidades[i].nome_Cidade, cidades[i].str);
 	}
 	printf("\n\n");
+}
+
+void insertionSort(struct foo *vetor, int n)
+{
+	int i, j;
+	struct foo temp;
+	for(i=1; i<n; i++){
+		temp = vetor[i];
+		j = i - 1;
+		while(j >= 0 && (vetor[j].str > temp.str)){
+			vetor[j+1] = vetor[j];
+			j = j - 1;
+		}
+		vetor[j+1] = temp;
+	}
+}
+
+void filipe(struct cidadeHumanos * cidades_Humanos, struct cidadeAnjos * cidades_Anjos, struct cidadeDemonios * cidades_Demonios, int num_cidadesHumanos, int num_cidadesAnjos, int num_cidadesDemonios)
+{
+	int i, j, k=0, p=0;
+	struct foo * geral;
+	
+	for(i=0;i<num_cidadesHumanos;i++){
+		p+=cidades_Humanos[i].num_humanos;
+	}
+	for(i=0;i<num_cidadesAnjos;i++){
+		p+=cidades_Anjos[i].num_anjos;
+	}
+	for(i=0;i<num_cidadesDemonios;i++){
+		p+=cidades_Demonios[i].num_demonios;
+	}
+	
+	geral = (struct foo *) calloc(p, sizeof(struct foo));
+	
+	for(i=0;i<num_cidadesHumanos;i++){
+		for(j=0;j<cidades_Humanos[i].num_humanos;j++){
+			strcpy(geral[k].nome,cidades_Humanos[i].humano[j].nome);
+			geral[k].str=cidades_Humanos[i].humano[j].str;
+			k++;
+		}
+	}
+	
+	for(i=0;i<num_cidadesAnjos;i++){
+		for(j=0;j<cidades_Anjos[i].num_anjos;j++){
+			strcpy(geral[k].nome,cidades_Anjos[i].anjo[j].nome);
+			geral[k].str=cidades_Anjos[i].anjo[j].str;
+			k++;
+		}
+	}
+	
+	for(i=0;i<num_cidadesDemonios;i++){
+		for(j=0;j<cidades_Demonios[i].num_demonios;j++){
+			strcpy(geral[k].nome,cidades_Demonios[i].demonio[j].nome);
+			geral[k].str=cidades_Demonios[i].demonio[j].str;
+			k++;
+		}
+	}
+	
+	insertionSort(geral, p);
+
+	//Fraco
+	k=0;
+	j=0;
+	for(i=1;i<p;i++){
+		if(geral[k].str==geral[i].str){
+			j++;
+		}
+	}
+	printf("Fracos: \n");
+	for(i=0;i<=j;i++){
+		printf("\t%s\n",geral[i].nome);
+	}
+	
+	//Fortes
+	k=p;
+	j=p;
+	for(i=p;i>0;i--){
+		if(geral[k].str==geral[i].str){
+			j--;
+		}
+	}
+	printf("Fortes: \n");
+	for(i=p-1;i>=j;i--){
+		printf("\t%s\n",geral[i].nome);
+	}
+}
+
+float totalizarStrHumanos(struct cidadeHumanos *cidades, int num_cidades)
+{
+	int i;
+	float soma = 0;
+	for(i=0; i<num_cidades; i++)
+		soma += cidades[i].str;
+	return soma;
+}
+
+float totalizarStrAnjos(struct cidadeAnjos *cidades, int num_cidades)
+{
+	int i;
+	float soma = 0;
+	for(i=0; i<num_cidades; i++)
+		soma += cidades[i].str;
+	return soma;
+}
+
+float totalizarStrDemonios(struct cidadeDemonios *cidades, int num_cidades)
+{
+	int i;
+	float soma = 0;
+	for(i=0; i<num_cidades; i++)
+		soma += cidades[i].str;
+	return soma;
+}
+
+void printOrdem(float humanos, float anjos, float demonios)
+{
+	printf("\n\nAs raças ordenadas por força: ");
+	if(humanos < anjos && anjos < demonios)
+		printf("Humanos, Anjos, Demonios.\n\n");
+	else if(humanos < demonios && demonios < anjos)
+		printf("Humanos, Demonios, Anjos.\n\n");
+	else if(anjos < humanos && humanos < demonios)
+		printf("Anjos, Humanos, Demonios.\n\n");
+	else if(anjos < demonios && demonios < humanos)
+		printf("Anjos, Demonios, Humanos.\n\n");
+	else if(demonios < humanos && humanos < anjos)
+		printf("Demonios, Humanos, Anjos.\n\n");
+	else if(demonios < anjos && anjos < humanos)
+		printf("Demonios, Anjos, Humanos.\n\n");
 }
 
 int main(int argc, char ** argv)
 {
 	setlocale(LC_ALL, "Portuguese");
 	int num_cidadesHumanos, num_cidadesAnjos, num_cidadesDemonios;
-	float soma2a;
+	float soma2a, humanos_str, anjos_str, demonios_str;
 
 //ler arquivos	
 
@@ -262,23 +395,30 @@ int main(int argc, char ** argv)
 	struct cidadeDemonios * cidades_Demonios;
 	f_demonios(&cidades_Demonios, &num_cidadesDemonios);
 	
-//totalizar forÃ§a das cidades
+	
+//totalizar forï¿½a das cidades
 
-	totalizarStrHumanos(&cidades_Humanos, num_cidadesHumanos);
-	totalizarStrAnjos(&cidades_Anjos, num_cidadesAnjos);
-	totalizarStrDemonios(&cidades_Demonios, num_cidadesDemonios);
+	totalizarCidadesStrHumanos(&cidades_Humanos, num_cidadesHumanos);
+	totalizarCidadesStrAnjos(&cidades_Anjos, num_cidadesAnjos);
+	totalizarCidadesStrDemonios(&cidades_Demonios, num_cidadesDemonios);
 
-//soma das forÃ§as do indivÃ­duos com 2 letra 'a' no nome
+//soma das forï¿½as do indivï¿½duos com 2 letra 'a' no nome
 
 	soma2a = somaAAHumanos(cidades_Humanos, num_cidadesHumanos) + somaAAAnjos(cidades_Anjos, num_cidadesAnjos) + somaAADemonios(cidades_Demonios, num_cidadesDemonios);
 
+    humanos_str = totalizarStrHumanos(cidades_Humanos, num_cidadesHumanos);
+    anjos_str = totalizarStrAnjos(cidades_Anjos, num_cidadesAnjos);
+    demonios_str = totalizarStrDemonios(cidades_Demonios, num_cidadesDemonios);
 
 //printar no console
 
     printStrCidadesAnjos(cidades_Anjos, num_cidadesAnjos);
 	printStrCidadesHumanos(cidades_Humanos, num_cidadesHumanos);
 	printStrCidadesDemonios(cidades_Demonios, num_cidadesDemonios);
-    printf("A soma das forças dos indivíduos com letras 'a' no nome é: %.2f\n\n", soma2a);
+    printf("A soma das forï¿½as dos indivï¿½duos com letras 'a' no nome ï¿½: %.2f\n\n", soma2a);
+	filipe(cidades_Humanos, cidades_Anjos, cidades_Demonios, num_cidadesHumanos, num_cidadesAnjos, num_cidadesDemonios);
+	printOrdem(humanos_str, anjos_str, demonios_str);
+
 
 	return(0);
 }
