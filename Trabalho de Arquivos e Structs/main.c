@@ -266,6 +266,36 @@ void insertionSort(struct foo *vetor, int n)
 	}
 }
 
+void printMenor(struct foo *vetor)
+{
+	int i = 1, j;
+	if(vetor[0].str < vetor[1].str)
+		printf("O ser mais fraco é: %s\n\n", vetor[0].nome);
+	else{
+	    while(vetor[i].str == vetor[i+1].str)
+	    	i++;
+	    printf("Os seres mais fracos são:");
+	    for(j=0; j<=i; j++)
+	    	printf(" %s,", vetor[j].nome);
+	}
+    printf("\n\n");
+}
+
+void printMaior(struct foo *vetor, int n)
+{
+	int i = n - 2, j;
+	if(vetor[n-1].str > vetor[i].str)
+		printf("O ser mais forte é: %s\n\n", vetor[n-1].nome);
+	else{
+		while(vetor[i].str == vetor[i-1].str)
+			i--;
+		printf("Os seres mais fracos são:");
+		for(j=n-1; j>=i; j--)
+			printf(" %s,",vetor[j].nome);
+	}
+	printf("\n\n");
+}
+
 void filipe(struct cidadeHumanos * cidades_Humanos, struct cidadeAnjos * cidades_Anjos, struct cidadeDemonios * cidades_Demonios, int num_cidadesHumanos, int num_cidadesAnjos, int num_cidadesDemonios)
 {
 	int i, j, k=0, p=0;
@@ -308,32 +338,9 @@ void filipe(struct cidadeHumanos * cidades_Humanos, struct cidadeAnjos * cidades
 	}
 	
 	insertionSort(geral, p);
+	printMenor(geral);
+	printMaior(geral, p);
 
-	//Fraco
-	k=0;
-	j=0;
-	for(i=1;i<p;i++){
-		if(geral[k].str==geral[i].str){
-			j++;
-		}
-	}
-	printf("Fracos: \n");
-	for(i=0;i<=j;i++){
-		printf("\t%s\n",geral[i].nome);
-	}
-	
-	//Fortes
-	k=p;
-	j=p;
-	for(i=p;i>0;i--){
-		if(geral[k].str==geral[i].str){
-			j--;
-		}
-	}
-	printf("Fortes: \n");
-	for(i=p-1;i>=j;i--){
-		printf("\t%s\n",geral[i].nome);
-	}
 }
 
 float totalizarStrHumanos(struct cidadeHumanos *cidades, int num_cidades)
@@ -415,7 +422,7 @@ int main(int argc, char ** argv)
     printStrCidadesAnjos(cidades_Anjos, num_cidadesAnjos);
 	printStrCidadesHumanos(cidades_Humanos, num_cidadesHumanos);
 	printStrCidadesDemonios(cidades_Demonios, num_cidadesDemonios);
-    printf("A soma das forï¿½as dos indivï¿½duos com letras 'a' no nome ï¿½: %.2f\n\n", soma2a);
+    printf("A soma das forças dos indivíduos com letras 'a' no nome é: %.2f \n\n\n\n", soma2a);
 	filipe(cidades_Humanos, cidades_Anjos, cidades_Demonios, num_cidadesHumanos, num_cidadesAnjos, num_cidadesDemonios);
 	printOrdem(humanos_str, anjos_str, demonios_str);
 
